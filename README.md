@@ -8,4 +8,4 @@ It will include features like:
   # if the pet was fed 
 
 This app will be build with Django and I will be mainly forcusing on backend.
-Frontend part will be done using Bootstrap and CSS for now. 
+The frontend part will be done using Bootstrap, CSS, and a bit of JavaScript.
