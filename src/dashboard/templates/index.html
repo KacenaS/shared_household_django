@@ -1,0 +1,63 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="p-4 mb-4 rounded fun-header">
+  <h1>Welcome to Your Shared Home!</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card section-card">
+      <div class="card-body">
+        <h4 class="section-title">Recent Transactions</h4>
+        <ul class="list-group list-group-flush">
+          {% for t in transactions %}
+          <li class="list-group-item">{{ t.date }} - {{ t.title }}: ${{ t.amount }}</li>
+          {% empty %}<li class="list-group-item">No transactions yet.</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-4">
+    <div class="card section-card">
+      <div class="card-body">
+        <h4 class="section-title">Upcoming Chores</h4>
+        <ul class="list-group list-group-flush">
+          {% for chore in chores %}
+          <li class="list-group-item">{{ chore.title }} - due {{ chore.due_date }}</li>
+          {% empty %}<li class="list-group-item">No chores due soon.</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 mb-4">
+    <div class="card section-card">
+      <div class="card-body">
+        <h4 class="section-title">Shopping List</h4>
+        <ul class="list-group list-group-flush">
+          {% for item in shopping_list %}
+          <li class="list-group-item">{{ item.title }}</li>
+          {% empty %}<li class="list-group-item">Nothing on the list yet.</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-4">
+    <div class="card section-card">
+      <div class="card-body">
+        <h4 class="section-title">🐱 Cat Status</h4>
+        <p class="fs-4">
+          {% if cat_fed_today %}
+          <span class="cat-fed">The cat has been fed today!</span>
+          {% else %}
+          <span class="cat-not-fed">The cat is still hungry!</span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

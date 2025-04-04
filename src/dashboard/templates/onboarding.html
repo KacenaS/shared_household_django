@@ -1,0 +1,37 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Join or Create Household{% endblock %}
+{% block content %}
+<h2 class="mb-4">Welcome! Let’s get you into a household 🏠</h2>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4>Create a New Household</h4>
+        <form method="post" action="/households/create/">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Household Name</label>
+            <input type="text" name="household_name" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-success">Create Household</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4>Join Existing Household</h4>
+        <form method="post" action="/households/join/">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Household Code</label>
+            <input type="text" name="household_code" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Join Household</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
