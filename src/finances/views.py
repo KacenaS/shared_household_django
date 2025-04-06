@@ -10,6 +10,7 @@ def transaction_list(request):
     )
     return render(request, 'finances/list.html', {'transactions': transactions})
 
+
 @login_required
 def transaction_create(request):
     if request.method == 'POST':
@@ -19,11 +20,11 @@ def transaction_create(request):
         date = request.POST.get('date')
         household = request.user.membership.household
         Transaction.objects.create(
-            title=title, 
-            amount=amount, 
-            category=category, 
-            date=date, 
-            paid_by=request.user, 
+            title=title,
+            amount=amount,
+            category=category,
+            date=date,
+            paid_by=request.user,
             household=household
         )
         return redirect('transaction_list')

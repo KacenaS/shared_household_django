@@ -8,6 +8,7 @@ def chore_list(request):
     chores = Chore.objects.filter(household__membership__user=request.user)
     return render(request, 'chores/list.html', {'chores': chores})
 
+
 @login_required
 def chore_create(request):
     if request.method == 'POST':

@@ -3,7 +3,6 @@ from .models import Household, Membership
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
 def create_household(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -12,7 +11,7 @@ def create_household(request):
         return redirect('dashboard')
     return render(request, 'households/create.html')
 
-@login_required
+
 def join_household(request):
     if request.method == 'POST':
         name = request.POST.get('name')

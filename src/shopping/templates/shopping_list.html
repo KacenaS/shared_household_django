@@ -1,0 +1,79 @@
+
+{% extends "base.html" %}
+{% block title %}Shopping List{% endblock %}
+{% block content %}
+<h2 class="mb-4">Shopping List</h2>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card" style="background-color: #f77f00; color: white; max-height: 80vh; overflow-y: auto;">
+      <div class="card-body">
+        <h4 class="text-white">Urgent Items</h4>
+        <ul class="list-group mb-4">
+          {% for item in items %}
+            {% if item.is_urgent and not item.is_bought %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ item.title }}</strong> ({{ item.get_category_display }})<br>
+                <small>Added by {{ item.added_by.username }} on {{ item.added_at|date:"M d, Y H:i" }}</small>
+              </div>
+              <form method="post" action="/shopping/toggle/{{ item.id }}/">
+                {% csrf_token %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="is_bought" onchange="this.form.submit()" {% if item.is_bought %}checked{% endif %}>
+                </div>
+              </form>
+            </li>
+            {% endif %}
+          {% empty %}
+            <li class="list-group-item">No urgent items.</li>
+          {% endfor %}
+        </ul>
+
+        <hr class="my-4 bg-white">
+
+        <h4 class="text-white">Other Items</h4>
+        <ul class="list-group">
+          {% for item in items %}
+            {% if not item.is_urgent and not item.is_bought %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ item.title }}</strong> ({{ item.get_category_display }})<br>
+                <small>Added by {{ item.added_by.username }} on {{ item.added_at|date:"M d, Y H:i" }}</small>
+              </div>
+              <form method="post" action="/shopping/toggle/{{ item.id }}/">
+                {% csrf_token %}
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="is_bought" onchange="this.form.submit()" {% if item.is_bought %}checked{% endif %}>
+                </div>
+              </form>
+            </li>
+            {% endif %}
+          {% empty %}
+            <li class="list-group-item">Nothing else to buy!</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <div class="card" style="max-height: 80vh; overflow-y: auto;">
+      <div class="card-body">
+        <h4 class="text-secondary">Recently Bought Items</h4>
+        <ul class="list-group">
+          {% for item in shopping_list %}
+            {% if item.is_bought %}
+            <li class="list-group-item">
+              <strong>{{ item.title }}</strong> ({{ item.get_category_display }}) - bought by {{ item.added_by.username }} on {{ item.added_at|date:"M d, Y H:i" }}
+            </li>
+            {% endif %}
+          {% empty %}
+            <li class="list-group-item">No bought items yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
