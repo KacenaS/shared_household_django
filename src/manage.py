@@ -5,7 +5,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "adventure_game.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shared_household.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
