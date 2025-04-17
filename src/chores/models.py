@@ -6,10 +6,11 @@ from shared_household import settings
 
 class Chore(models.Model):
     title = models.CharField(max_length=255)
-    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     due_date = models.DateField()
     is_done = models.BooleanField(default=False)
-    household = models.ForeignKey(Household, on_delete=models.CASCADE)
+    completed_at = models.DateTimeField(null=True, blank=True)
+    household = models.ForeignKey(Household, on_delete=models.CASCADE, null=True, blank=True)
     is_recurring = models.BooleanField(default=False)
     recurrence_days = models.IntegerField(
         null=True,

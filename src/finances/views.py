@@ -3,7 +3,6 @@ from .models import Transaction
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
 def transaction_list(request):
     transactions = Transaction.objects.filter(
         household__membership__user=request.user
@@ -11,7 +10,6 @@ def transaction_list(request):
     return render(request, 'finances/list.html', {'transactions': transactions})
 
 
-@login_required
 def transaction_create(request):
     if request.method == 'POST':
         title = request.POST.get('title')

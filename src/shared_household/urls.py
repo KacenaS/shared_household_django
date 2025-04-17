@@ -25,5 +25,6 @@ urlpatterns = [
     # path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', include('dashboard.urls')),
     path('shopping/', include('shopping.urls')),
+    path('chores/', include('chores.urls')),
     # path('', include('accounts.urls')),
 ]
