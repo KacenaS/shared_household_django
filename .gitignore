@@ -1,0 +1,35 @@
+# Python virtual environment
+venv/
+env/
+ENV/
+.venv/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Django stuff
+*.sqlite3
+*.log
+
+# Ignore all migration pyc files but keep actual migration scripts
+**/migrations/__pycache__/
+!**/migrations/*.py
+
+# Ignore local settings if applicable
+local_settings.py
+.env
+
+# VS Code and PyCharm settings
+.vscode/
+.idea/
+
+# macOS and Windows OS files
+.DS_Store
+Thumbs.db
+

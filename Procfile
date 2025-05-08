@@ -1,0 +1,1 @@
+web: gunicorn shared_household.wsgi
