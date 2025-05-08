@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "finances",
     "households",
     "shopping",
+    'shared_household',
 ]
 
 MIDDLEWARE = [
