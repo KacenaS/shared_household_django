@@ -6,7 +6,7 @@ from shared_household import settings
 
 class Chore(models.Model):
     title = models.CharField(max_length=255)
-    assigned_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     due_date = models.DateField()
     is_done = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)

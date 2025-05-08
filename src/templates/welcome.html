@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Welcome to the Shared Household App</h1>
+  <p>This app helps you manage chores, finances, shopping, and more in your shared home.</p>
+  <ul>
+    <li><a href="{% url 'accounts:register' %}">Create a User</a></li>
+    <li><a href="{% url 'login' %}">Login</a></li>
+  </ul>
+{% endblock %}

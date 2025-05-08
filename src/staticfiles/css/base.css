@@ -1,31 +1,27 @@
 body {
-    
-    background: url("../img/house.png") no-repeat center center fixed;
-    background-size: 100% 700px;
-    background-color: #fefae0; /* fallback */
-  }
-  
-  .fun-header {
-    background-color: rgba(247, 127, 0, 0.9);
-    color: white;
-  }
-  
-  .section-card {
-    border-left: 5px solid #2a9d8f;
-    background: rgba(255, 255, 255, 0.8);
-  }
-  
-  .section-title {
-    color: #eb5353;
-  }
-  
-  .cat-fed {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .cat-not-fed {
-    color: red;
-    font-weight: bold;
-  }
-  
+  background-color: #d8f3dc; /* soft pastel green */
+}
+
+.fun-header {
+  background-color: rgba(247, 127, 0, 0.9);
+  color: white;
+}
+
+.section-card {
+  border-left: 5px solid #2a9d8f;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.section-title {
+  color: #eb5353;
+}
+
+.cat-fed {
+  color: green;
+  font-weight: bold;
+}
+
+.cat-not-fed {
+  color: red;
+  font-weight: bold;
+}

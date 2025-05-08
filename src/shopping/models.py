@@ -17,7 +17,7 @@ class ShoppingItem(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
     is_urgent = models.BooleanField(default=False)
     is_bought = models.BooleanField(default=False)
-    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE)
     household = models.ForeignKey(Household, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
 

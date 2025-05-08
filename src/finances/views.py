@@ -1,29 +1,26 @@
 from django.shortcuts import render, redirect
-from .models import Transaction
+from finances.models import Transaction
+from finances.forms import TransactionForm  # Import TransactionForm from the forms module
+from households.models import Household  # Import Household model
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, FormView
 
 
-def transaction_list(request):
-    transactions = Transaction.objects.filter(
-        household__membership__user=request.user
-    )
-    return render(request, 'finances/list.html', {'transactions': transactions})
+class TransactionListView(ListView):
+    model = Transaction
+    template_name = 'finances/list.html'
+    context_object_name = 'transactions'
 
 
-def transaction_create(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        amount = request.POST.get('amount')
-        category = request.POST.get('category')
-        date = request.POST.get('date')
-        household = request.user.membership.household
-        Transaction.objects.create(
-            title=title,
-            amount=amount,
-            category=category,
-            date=date,
-            paid_by=request.user,
-            household=household
-        )
+class TransactionCreateFormView(FormView):
+    template_name = 'finances/form.html'
+    form_class = TransactionForm  
+
+    def form_valid(self, form):
+        transaction = form.save(commit=False)
+        household = Household.objects.first()
+        if household is None:
+            raise ValueError("No Household exists. Please create one first.")
+        transaction.household = household
+        transaction.save()
         return redirect('transaction_list')
-    return render(request, 'finances/form.html')

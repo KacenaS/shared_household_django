@@ -12,7 +12,7 @@ class Household(models.Model):
 
 
 class Membership(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     household = models.ForeignKey(Household, on_delete=models.CASCADE)
     joined_at = models.DateTimeField(auto_now_add=True)
 

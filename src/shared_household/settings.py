@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +28,7 @@ SECRET_KEY = "django-insecure-tz*t3&z2qj_d&v^_uypb(&=ufajv(eb9=+#@ygnj*w4!=6(ft7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.onrender.com', '127.0.0.1']
+ALLOWED_HOSTS = [".onrender.com", "127.0.0.1"]
 
 
 # Application definition
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # third party 
+    # third party
     "django_extensions",
     # MY APPS
     "accounts",
@@ -47,11 +49,10 @@ INSTALLED_APPS = [
     "finances",
     "households",
     "shopping",
-
 ]
 
 MIDDLEWARE = [
-    "whitenoise.middleware.WhiteNoiseMiddleware",  
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -67,10 +68,8 @@ ROOT_URLCONF = "shared_household.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-              os.path.join(BASE_DIR, "shared_household", "templates"),
-        ],
-        "APP_DIRS": True,
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
@@ -138,13 +137,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MY ADDITIONS
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-LOGIN_URL = "C:/Users/katerina.simkova/django_projects/shared_household_django/src/accounts/templates/login.html"
-LOGIN_REDIRECT_URL = ""
+LOGIN_URL = 'login'  
+LOGIN_REDIRECT_URL = 'dashboard'
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
 

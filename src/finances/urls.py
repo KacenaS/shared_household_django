@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
+from finances.views import TransactionListView, TransactionCreateFormView
 
 urlpatterns = [
-    path('', views.transaction_list, name='transaction_list'),
-    path('new/', views.transaction_create, name='transaction_create'),
+    path('', TransactionListView.as_view(), name='transaction_list'),
+    path('new/', TransactionCreateFormView.as_view(), name='transaction_create'),
 ]
