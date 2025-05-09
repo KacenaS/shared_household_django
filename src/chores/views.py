@@ -1,54 +1,45 @@
-# views.py
-
-from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.urls import reverse_lazy
 from .models import Chore
-from django.contrib.auth import get_user_model
+from households.models import Membership
+from django.utils.timezone import now
+from django.shortcuts import redirect
 from django.db.models import Q
-from django.utils import timezone
+from .models import Chore
+from households.models import Membership
 
 
-def chore_list(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
+class ChoreListView(ListView):
+    model = Chore
+    template_name = 'list.html'
+    context_object_name = 'chores'
 
-    if request.method == 'POST':
+    def get_queryset(self):
+        user = self.request.user
+        membership = Membership.objects.filter(user=user).select_related('household').first()
+        household = membership.household if membership else None
+        return Chore.objects.filter(household=household) if household else Chore.objects.none()
+
+    def post(self, request, *args, **kwargs):
         if 'clear_completed' in request.POST:
             Chore.objects.filter(is_done=True).delete()
         else:
             done_ids = request.POST.getlist('done_chore_ids')
             if done_ids:
-                Chore.objects.filter(id__in=done_ids).update(is_done=True, completed_at=timezone.now())
-        return redirect('chore_list')
+                Chore.objects.filter(id__in=done_ids).update(is_done=True, completed_at=now())
+        return redirect('chore_list')  # Adjust if your URL name is different
 
-    chores = Chore.objects.filter(
-        Q(household__membership__user=request.user) | Q(household__isnull=True)
-    ).distinct()
-    return render(request, 'list.html', {'chores': chores})
 
-def chore_create(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        due_date = request.POST.get('due_date')
-        is_recurring = request.POST.get('is_recurring') == 'on'
+class ChoreCreateView(CreateView):
+    model = Chore
+    template_name = 'form.html'
+    fields = ['title', 'due_date', 'is_recurring', 'recurrence_days']  # Don't include household or assigned_to directly
+    success_url = reverse_lazy('chore_list')  # Adjust if your URL name is different
 
-        recurrence_days = request.POST.get('recurrence_days')
-        recurrence_days = int(recurrence_days) if recurrence_days else None
-
-        assigned_to = request.user if request.user.is_authenticated else None
-        household = (
-            getattr(request.user, 'membership', None).household
-            if request.user.is_authenticated and hasattr(request.user, 'membership')
-            else None
-        )
-
-        Chore.objects.create(
-            title=title,
-            due_date=due_date,
-            assigned_to=assigned_to,
-            is_recurring=is_recurring,
-            recurrence_days=recurrence_days,
-            household=household
-        )
-        return redirect('chore_list' if request.user.is_authenticated else '/')
-
-    return render(request, 'form.html')
+    def form_valid(self, form):
+        user = self.request.user
+        form.instance.assigned_to = user
+        membership = Membership.objects.filter(user=user).select_related('household').first()
+        form.instance.household = membership.household if membership else None
+        return super().form_valid(form)

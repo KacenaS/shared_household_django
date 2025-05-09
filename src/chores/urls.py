@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from chores.views import ChoreListView, ChoreCreateView
 
 urlpatterns = [
-    path('', views.chore_list, name='chore_list'),
-    path('new/', views.chore_create, name='chore_create'),
+    path('', ChoreListView.as_view(), name='chore_list'),
+    path('new/', ChoreCreateView.as_view(), name='chore_create'),
 ]

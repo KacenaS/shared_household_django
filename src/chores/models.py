@@ -10,7 +10,7 @@ class Chore(models.Model):
     due_date = models.DateField()
     is_done = models.BooleanField(default=False)
     completed_at = models.DateTimeField(null=True, blank=True)
-    household = models.ForeignKey(Household, on_delete=models.CASCADE, null=True, blank=True)
+    household = models.ForeignKey(Household, on_delete=models.CASCADE)
     is_recurring = models.BooleanField(default=False)
     recurrence_days = models.IntegerField(
         null=True,

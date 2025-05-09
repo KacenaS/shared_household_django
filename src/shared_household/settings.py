@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     # third party
     "django_extensions",
     # MY APPS
-    "accounts",
     "chores",
     "dashboard",
     "finances",
@@ -69,13 +68,14 @@ ROOT_URLCONF = "shared_household.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'shared_household', 'templates')],
         'APP_DIRS': True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "households.context_processors.current_household",
             ],
         },
     },
@@ -145,5 +145,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 LOGIN_URL = 'login'  
 LOGIN_REDIRECT_URL = 'homepage'
+LOGOUT_REDIRECT_URL = 'welcome'
 
 

@@ -31,5 +31,5 @@ class HomepageView(LoginRequiredMixin, TemplateView):
             context['shopping_list'] = []
             # context['fed_today'] = False
 
-        return 
+        return context
 
