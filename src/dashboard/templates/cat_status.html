@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Feed the Cat{% endblock %}
+
+{% block content %}
+  <h2>🐱 Feed the Cat</h2>
+
+  {% if cat_fed_today %}
+    <div class="alert alert-success">✅ The cat has been fed today!</div>
+  {% else %}
+    <div class="alert alert-warning">😿 The cat is hungry.</div>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Feed the Cat</button>
+    </form>
+  {% endif %}
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
-from .views import HomepageView
+from dashboard.views import HomepageView, FeedCatView
 
 urlpatterns = [
     path('', HomepageView.as_view(), name='homepage'),
+    path('cat/feed/', FeedCatView.as_view(), name='feed_cat'),
 ]

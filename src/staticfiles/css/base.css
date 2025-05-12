@@ -1,5 +1,5 @@
 body {
-  background-color: #d8f3dc; /* soft pastel green */
+  background-color: #F1BA88; 
 }
 
 .fun-header {
@@ -22,6 +22,6 @@ body {
 }
 
 .cat-not-fed {
-  color: red;
+  color: rgb(202, 69, 69);
   font-weight: bold;
 }

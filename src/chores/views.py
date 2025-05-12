@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.db.models import Q
 from .models import Chore
 from households.models import Membership
+from django.utils.timezone import localdate
 
 
 class ChoreListView(ListView):
@@ -27,8 +28,23 @@ class ChoreListView(ListView):
         else:
             done_ids = request.POST.getlist('done_chore_ids')
             if done_ids:
-                Chore.objects.filter(id__in=done_ids).update(is_done=True, completed_at=now())
-        return redirect('chore_list')  # Adjust if your URL name is different
+                Chore.objects.filter(id__in=done_ids).update(
+                    is_done=True, 
+                    completed_at=now(),
+                    finished_by=request.user
+                )
+        return redirect('chore_list')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        membership = Membership.objects.filter(user=user).select_related('household').first()
+        household = membership.household if membership else None
+
+        context['completed_chores'] = Chore.objects.filter(household=household, is_done=True).order_by('-completed_at')
+        context['chores'] = Chore.objects.filter(household=household, is_done=False).order_by('due_date')
+        context['today'] = localdate()
+        return context
 
 
 class ChoreCreateView(CreateView):

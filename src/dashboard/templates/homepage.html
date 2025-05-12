@@ -12,7 +12,7 @@
         <h4 class="section-title">Recent Transactions</h4>
         <ul class="list-group list-group-flush">
           {% for t in transactions %}
-          <li class="list-group-item">{{ t.date }} - {{ t.title }}: ${{ t.amount }}</li>
+          <li class="list-group-item">{{ t.date }} - {{ t.title }}:  {{ t.amount }}</li>
           {% empty %}<li class="list-group-item">No transactions yet.</li>{% endfor %}
         </ul>
       </div>
@@ -21,11 +21,21 @@
   <div class="col-md-6 mb-4">
     <div class="card section-card">
       <div class="card-body">
-        <h4 class="section-title">Upcoming Chores</h4>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h4 class="section-title mb-0">Upcoming Chores</h4>
+          <small class="section-title ms-3">Due</small>
+        </div>
         <ul class="list-group list-group-flush">
           {% for chore in chores %}
-          <li class="list-group-item">{{ chore.title }} - due {{ chore.due_date }}</li>
-          {% empty %}<li class="list-group-item">No chores due soon.</li>{% endfor %}
+          {% if not chore.is_done %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-bold fs-6">{{ chore.title }}</span>
+            <small class="text-muted">{{ chore.due_date }}</small>
+          </li>
+          {% endif %}
+          {% empty %}
+          <li class="list-group-item">No chores due soon.</li>
+          {% endfor %}
         </ul>
       </div>
     </div>
@@ -50,12 +60,17 @@
       <div class="card-body">
         <h4 class="section-title">🐱 Cat Status</h4>
         <p class="fs-4">
-          {% if cat_fed_today %}
-          <span class="cat-fed">The cat has been fed today!</span>
-          {% else %}
-          <span class="cat-not-fed">The cat is still hungry!</span>
-          {% endif %}
+          {% if fed_today  %}
+          <div class="alert alert-success">✅ The cat has been fed today!</div>
+        {% else %}
+          <div class="alert alert-warning">😿 The cat is hungry.</div>
+          <form method="post" action="{% url 'feed_cat' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Feed the Cat</button>
+        </form>
+        {% endif %}
         </p>
+        <p class="text-muted">Last fed: {{ last_fed_time }}</p>
       </div>
     </div>
   </div>
